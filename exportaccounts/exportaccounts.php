@@ -88,7 +88,7 @@ class ExportAccounts extends Module
 									case '708500':
 										/* cas des ports offerts, montant 0 non accepte par ciel */
 										if ( $order->total_shipping > 0 ) {
-										$mouvement.=round($order->total_shipping/1.196,2).';'.'C;'.str_pad($order->invoice_number,6,"0", STR_PAD_LEFT).';'.'Ports et frais accessoires fact.';
+										$mouvement.=round($order->total_shipping/1.200,2).';'.'C;'.str_pad($order->invoice_number,6,"0", STR_PAD_LEFT).';'.'Ports et frais accessoires fact.';
 										}
 										else
 										{
@@ -97,9 +97,9 @@ class ExportAccounts extends Module
 										
 										break;
 									case '445714':
-										/*$mouvement.=round((($order->total_products*0.196)+($order->total_shipping-($order->total_shipping/1.196))),2).';'.'C;'.str_pad($order->invoice_number,6,"0", STR_PAD_LEFT).';'.'Tva collectée 19.6 %';*/
-                                        /*$mouvement.=round($order->total_shipping-($order->total_shipping/1.196),2)+round($order->total_products*0.196,2).';'.'C;'.str_pad($order->invoice_number,6,"0", STR_PAD_LEFT).';'.'Tva collectée 19.6 %';*/
-                                        $mouvement.=$order->total_paid-($order->total_products+round($order->total_shipping/1.196,2)).';'.'C;'.str_pad($order->invoice_number,6,"0", STR_PAD_LEFT).';'.'Tva collectŽe 19.6 %';
+										/*$mouvement.=round((($order->total_products*0.200)+($order->total_shipping-($order->total_shipping/1.200))),2).';'.'C;'.str_pad($order->invoice_number,6,"0", STR_PAD_LEFT).';'.'Tva collectée 20.0 %';*/
+                                        /*$mouvement.=round($order->total_shipping-($order->total_shipping/1.200),2)+round($order->total_products*0.200,2).';'.'C;'.str_pad($order->invoice_number,6,"0", STR_PAD_LEFT).';'.'Tva collectée 20.0 %';*/
+                                        $mouvement.=$order->total_paid-($order->total_products+round($order->total_shipping/1.200,2)).';'.'C;'.str_pad($order->invoice_number,6,"0", STR_PAD_LEFT).';'.'Tva collectŽe 20.0 %';
 										break;
 									
 									}
@@ -110,6 +110,8 @@ class ExportAccounts extends Module
 								/*Partie Génération Paiement: Journal BQ*/
 								$cpt_mvt++;
 								$arr_compte=array('51200x','411100');
+
+
 								foreach ($arr_compte as $local_compte)
 								{
 									$mouvement=$cpt_mvt.';BQ;'.strftime("%Y%m%d",strtotime($order->invoice_date)).';'.strftime("%Y%m%d",strtotime($order->invoice_date)).';'.str_pad($order->invoice_number,6,"0", STR_PAD_LEFT).';';
